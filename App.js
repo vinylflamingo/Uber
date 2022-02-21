@@ -2,17 +2,40 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider} from "react-redux";
 import HomeScreen from './screens/HomeScreen';
+import MapScreen from './screens/MapScreen'
 import { store } from "./store";
-// 1) Setup Redux
-//
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import "react-native-gesture-handler"
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+
 
 export default function App() {
+
+  const Stack = createStackNavigator();
+  
+
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <HomeScreen />
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+          <SafeAreaProvider>
+            <Stack.Navigator
+                screenOptions={{
+                headerShown: false
+              }}>
+              <Stack.Screen
+              name='HomeScreen'
+              component={HomeScreen}
+              />
+              <Stack.Screen
+              name='MapScreen'
+              component={MapScreen}
+              />
+            </Stack.Navigator>
+          </SafeAreaProvider>
+      </NavigationContainer>
     </Provider>
   );
 }
